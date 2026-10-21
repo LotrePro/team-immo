@@ -2,11 +2,11 @@ const express = require('express');
 const router = express.Router();
 
 router.get('/', (req, res) => {
-  res.render('login', { title: 'Connexion' });
+  res.render('login', { title: 'Connexion', layout: false });
 });
 
-router.get('/', (req, res) => {
-  res.render('/accueil', { title: 'Accueil' });
+router.get('/accueil', (req, res) => {
+  res.render('user/accueil', { title: 'Accueil' });
 });
 
 module.exports = router;
