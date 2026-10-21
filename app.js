@@ -28,8 +28,7 @@ app.use(session({
   }
 }));
 
-
-app.use('/', require('./src/routes/index'));
+app.use('/', require('./src/routes/router.js'));
 
 app.use((req, res) => res.status(404).send('Page introuvable'));
 
