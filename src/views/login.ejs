@@ -3,22 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../public/css/login.css">
     <title>Login</title>
 </head>
-<body class="login-page">
-    <!-- <div class="login-container">
-        <h1>Login</h1>
-        <form action="/login/user" method="POST">
-            <label for="username">Matricule:</label>
-            <input type="text" id="username" name="username" required>
-            
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="password" required>
-            
-            <button type="submit">Login</button>
-        </form>
-    </div>
-     -->
-     <h1>Ça marche !</h1>
+<body>
+  <main class="login-page">
+    <form class="login-card">
+      <h1>Connexion</h1>
+      <p class="subtitle">Accédez à votre espace</p>
+
+
+      <label for="email">Matricule</label>
+      <input type="text" id="email" name="email" placeholder="Votre matricule" required autofocus>
+
+      <label for="password">Mot de passe</label>
+      <input type="password" id="password" name="password" placeholder=".........." required>
+
+      <button type="submit">Se connecter</button>
+      </form>
+  </main>
 </body>
 </html>
