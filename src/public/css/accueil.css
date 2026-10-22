@@ -20,5 +20,12 @@ body { margin: 0; font-family: Arial, sans-serif; background: #f4f6f9; }
   padding: 0;
 }
 
-.navbar-menu a { color: #fff; text-decoration: none; }
+.navbar-menu a { color: #caccff; text-decoration: none; }
 .navbar-menu a:hover { text-decoration: underline; }
+
+h1{
+  color: rgb(12, 12, 255);
+  text-align: center;
+  text-decoration: none;
+  
+}
