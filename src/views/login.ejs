@@ -8,18 +8,18 @@
 </head>
 <body>
   <main class="login-page">
-    <form class="login-card">
+    <form class="login-card" method="POST" action="/login">
       <h1>Connexion</h1>
       <p class="subtitle">Gestion es personnels</p>
 
 
-      <label for="email">Matricule</label>
-      <input type="text" id="email" name="email" placeholder="Votre matricule" required autofocus>
+      <label for="matricule">Matricule</label>
+      <input type="text" name="matricule" placeholder="Votre matricule" required autofocus>
 
       <label for="password">Mot de passe</label>
-      <input type="password" id="password" name="password" placeholder=".........." required>
+      <input type="password" name="password" placeholder=".........." required>
 
-      <button type="submit" href="/accueil">Se connecter</button>
+      <button type="submit">Se connecter</button>
       </form>
   </main>
 </body>
