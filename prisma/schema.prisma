@@ -19,3 +19,18 @@ model User {
   password  String
   createdAt DateTime @default(now())
 }
+
+enum Contrat {
+  CDD
+  CDI
+}
+
+model Personnel {
+  matricule    String   @id
+  nomComplet   String
+  adresse      String
+  email        String   @unique
+  telephone    String
+  contrat      Contrat
+  dateEmbauche DateTime
+}
