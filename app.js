@@ -4,11 +4,16 @@ const path = require('path');
 const session = require('express-session');
 const helmet = require('helmet');
 const morgan = require('morgan');
+const expressLayouts = require('express-ejs-layouts');
 
 const app = express();
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'src','views'));
+
+app.use(expressLayouts);
+app.set('layout', 'layouts/main');
+
 
 app.use(helmet());
 app.use(morgan('dev'));
