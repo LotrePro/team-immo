@@ -1,8 +1,12 @@
 <nav class="navbar">
-  <span class="navbar-titre"><strong> /> Gestion du personnel</strong></span>
+  <span class="navbar-titre"> /> Gestion du personnel</span>
   <ul class="navbar-menu">
-    <li><a href="/accueil"><strong>Accueil</strong></a></li>
-    <li><a href="/personnel/ajouter"><strong>Ajout</strong></a></li>
-    <li><a href="/"><strong>Déconnexion</strong></a></li>
+    <li><a href="/accueil">Accueil</a></li>
+    <li><a href="/personnel/ajouter">Ajout</a></li>
+    <li>
+      <form action="/logout" method="POST" class="logout-form">
+        <button type="submit" class="logout-btn">Déconnexion</button>
+      </form>
+    </li>
   </ul>
 </nav>

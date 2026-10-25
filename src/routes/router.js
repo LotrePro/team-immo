@@ -49,8 +49,27 @@ router.post('/login', async (req, res) => {
 });
 
 
-router.get('/accueil', auth, (req, res) => {
-  res.render('accueil', { title: 'Accueil' });
+router.get('/accueil', auth, async (req, res) => {
+  try {
+    const personnels = await prisma.personnel.findMany({
+      orderBy: { matricule: 'asc' },
+    });
+    res.render('accueil', { title: 'Accueil', personnels });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send('Erreur serveur');
+  }
+});
+
+router.post('/personnel/:matricule/supprimer', auth, async (req, res) => {
+  try {
+    await prisma.personnel.delete({
+      where: { matricule: req.params.matricule },
+    });
+  } catch (err) {
+    if (err.code !== 'P2025') console.error(err);
+  }
+  res.redirect('/accueil');
 });
 
 // Déconnexion
