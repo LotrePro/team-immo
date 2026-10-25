@@ -1,3 +1,51 @@
 <main class="contenu">
     <h1>Liste du personnel</h1>
-</main>
+  
+    <div class="card">
+      <div class="table-wrapper">
+        <table>
+          <thead>
+            <tr>
+              <th>Matricule</th>
+              <th>Nom complet</th>
+              <th>Adresse</th>
+              <th>Email</th>
+              <th>Téléphone</th>
+              <th>Contrat</th>
+              <th>Date d'embauche</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if (personnels.length === 0) { %>
+              <tr><td colspan="8" class="vide">Aucun personnel enregistré.</td></tr>
+            <% } %>
+  
+            <% personnels.forEach(p => { %>
+              <tr>
+                <td><%= p.matricule %></td>
+                <td><%= p.nomComplet %></td>
+                <td><%= p.adresse %></td>
+                <td><%= p.email %></td>
+                <td><%= p.telephone %></td>
+                <td>
+                  <span class="badge badge-<%= p.contrat.toLowerCase() %>"><%= p.contrat %></span>
+                </td>
+                <td><%= p.dateEmbauche.toLocaleDateString('fr-FR') %></td>
+                <td class="actions">
+                  <a class="btn btn-modifier"
+                     href="/personnel/<%= encodeURIComponent(p.matricule) %>/modifier">Modifier</a>
+  
+                  <form action="/personnel/<%= encodeURIComponent(p.matricule) %>/supprimer"
+                        method="POST"
+                        onsubmit="return confirm('Voulez-vous vraiment supprimer ce personnel ?')">
+                    <button type="submit" class="btn btn-supprimer">Supprimer</button>
+                  </form>
+                </td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </main>
