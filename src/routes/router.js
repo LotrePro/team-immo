@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const prisma = require('../prisma');
 const auth = require('../middleware/auth');
+const CONTRATS = ['CDD' , 'CDI'];
 
 
 router.get('/', (req, res) => {
@@ -47,8 +48,43 @@ router.post('/login', async (req, res) => {
     });
   }
 });
+/*****************************************************************************************/
 
+function validerPersonnel(body) {
+  const valeurs = {
+    matricule: (body.matricule || '').trim(),
+    nomComplet: (body.nomComplet || '').trim(),
+    adresse: (body.adresse || '').trim(),
+    email: (body.email || '').trim().toLowerCase(),
+    telephone: (body.telephone || '').trim(),
+    contrat: body.contrat || '',
+    dateEmbauche: body.dateEmbauche || '',
+  };
 
+  const erreurs = [];
+
+  if (!valeurs.matricule) erreurs.push('Le matricule est obligatoire.');
+  else if (valeurs.matricule.length > 50) erreurs.push('Le matricule est trop long (50 caractères max).');
+
+  if (!valeurs.nomComplet) erreurs.push('Le nom complet est obligatoire.');
+  if (!valeurs.adresse) erreurs.push("L'adresse est obligatoire.");
+
+  if (!valeurs.email) erreurs.push("L'email est obligatoire.");
+  else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(valeurs.email)) erreurs.push("L'email n'est pas valide.");
+
+  if (!valeurs.telephone) erreurs.push('Le numéro de téléphone est obligatoire.');
+  else if (!/^[0-9+\s().-]{8,20}$/.test(valeurs.telephone)) erreurs.push('Le numéro de téléphone n\'est pas valide.');
+
+  if (!CONTRATS.includes(valeurs.contrat)) erreurs.push('Le contrat doit être CDD ou CDI.');
+
+  if (!valeurs.dateEmbauche || isNaN(new Date(valeurs.dateEmbauche))) {
+    erreurs.push("La date d'embauche est obligatoire et doit être valide.");
+  }
+
+  return { valeurs, erreurs };
+}
+
+/***************************************************************************************/
 router.get('/accueil', auth, async (req, res) => {
   try {
     const personnels = await prisma.personnel.findMany({
@@ -71,6 +107,54 @@ router.post('/personnel/:matricule/supprimer', auth, async (req, res) => {
   }
   res.redirect('/accueil');
 });
+
+// Formulaire d'ajout
+router.get('/personnel/ajouter', auth, (req, res) => {
+  res.render('ajouter', {
+    title: 'Ajout',
+    erreurs: [],
+    valeurs: { contrat: 'CDI' },
+  });
+});
+
+// Création
+router.post('/personnel/ajouter', auth, async (req, res) => {
+  const { valeurs, erreurs } = validerPersonnel(req.body);
+
+  const reafficher = (status) =>
+    res.status(status).render('ajouter', { title: 'Ajout', erreurs, valeurs });
+
+  if (erreurs.length) return reafficher(400);
+
+  try {
+    // Vérification des doublons
+    const [parMatricule, parEmail] = await Promise.all([
+      prisma.personnel.findUnique({ where: { matricule: valeurs.matricule } }),
+      prisma.personnel.findUnique({ where: { email: valeurs.email } }),
+    ]);
+    if (parMatricule) erreurs.push('Ce matricule existe déjà.');
+    if (parEmail) erreurs.push('Cet email est déjà utilisé.');
+    if (erreurs.length) return reafficher(409);
+
+    await prisma.personnel.create({
+      data: {
+        ...valeurs,
+        dateEmbauche: new Date(valeurs.dateEmbauche),
+      },
+    });
+    res.redirect('/accueil');
+  } catch (err) {
+    // P2002 = doublon détecté par la base (cas de deux envois simultanés)
+    if (err.code === 'P2002') {
+      erreurs.push('Ce matricule ou cet email existe déjà.');
+      return reafficher(409);
+    }
+    console.error(err);
+    erreurs.push('Erreur serveur, réessayez.');
+    reafficher(500);
+  }
+});
+
 
 // Déconnexion
 router.post('/logout', (req, res) => {
