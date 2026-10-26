@@ -1,0 +1,68 @@
+<main class="contenu">
+    <h1>Ajouter un membre du personnel</h1>
+  
+    <div class="card form-card">
+      <% if (erreurs.length) { %>
+        <div class="alerte-erreur">
+          <ul>
+            <% erreurs.forEach(e => { %>
+              <li><%= e %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+  
+      <form action="/personnel/ajouter" method="POST" novalidate>
+        <div class="form-grid">
+          <div class="champ">
+            <label for="matricule">Matricule</label>
+            <input type="text" id="matricule" name="matricule" required
+                   value="<%= valeurs.matricule || '' %>">
+          </div>
+  
+          <div class="champ">
+            <label for="nomComplet">Nom complet</label>
+            <input type="text" id="nomComplet" name="nomComplet" required
+                   value="<%= valeurs.nomComplet || '' %>">
+          </div>
+  
+          <div class="champ champ-large">
+            <label for="adresse">Adresse</label>
+            <input type="text" id="adresse" name="adresse" required
+                   value="<%= valeurs.adresse || '' %>">
+          </div>
+  
+          <div class="champ">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required
+                   value="<%= valeurs.email || '' %>">
+          </div>
+  
+          <div class="champ">
+            <label for="telephone">Numéro de téléphone</label>
+            <input type="tel" id="telephone" name="telephone" required
+                   value="<%= valeurs.telephone || '' %>">
+          </div>
+  
+          <div class="champ">
+            <label for="contrat">Contrat</label>
+            <select id="contrat" name="contrat" required>
+              <option value="CDI" <%= valeurs.contrat === 'CDI' ? 'selected' : '' %>>CDI</option>
+              <option value="CDD" <%= valeurs.contrat === 'CDD' ? 'selected' : '' %>>CDD</option>
+            </select>
+          </div>
+  
+          <div class="champ">
+            <label for="dateEmbauche">Date d'embauche</label>
+            <input type="date" id="dateEmbauche" name="dateEmbauche" required
+                   value="<%= valeurs.dateEmbauche || '' %>">
+          </div>
+        </div>
+  
+        <div class="form-actions">
+          <a href="/accueil" class="btn btn-annuler">Annuler</a>
+          <button type="submit" class="btn btn-enregistrer">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </main>
