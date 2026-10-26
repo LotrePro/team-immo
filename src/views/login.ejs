@@ -19,6 +19,10 @@
       <label for="password">Mot de passe</label>
       <input type="password" name="password" placeholder=".........." required>
 
+      <% if (typeof erreur !== 'undefined' && erreur) { %>
+          <div class="alert alert-danger"><%= erreur %></div>
+      <% } %>
+
       <button type="submit">Se connecter</button>
       </form>
   </main>
