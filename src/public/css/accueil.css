@@ -110,3 +110,57 @@ tbody tr:hover { background: #eef2ff; }
 .btn:hover { filter: brightness(0.9); }
 .btn-modifier { background: #2563eb; }
 .btn-supprimer { background: #dc2626; }
+
+/*********************************************Ajout******************************************************/
+/* ===== Formulaire ===== */
+.form-card { max-width: 800px; margin: 0 auto; padding: 28px; }
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px 20px;
+}
+.champ { display: flex; flex-direction: column; gap: 6px; }
+.champ-large { grid-column: 1 / -1; }
+
+.champ label { font-size: 13px; font-weight: bold; color: #374151; }
+
+.champ input,
+.champ select {
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 14px;
+  font-family: inherit;
+  background: #fff;
+}
+.champ input:focus,
+.champ select:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: 24px;
+}
+.btn-enregistrer { background: #16a34a; }
+.btn-annuler { background: #6b7280; }
+
+.alerte-erreur {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.alerte-erreur ul { margin: 0; padding-left: 18px; }
+
+@media (max-width: 640px) {
+  .form-grid { grid-template-columns: 1fr; }
+}
