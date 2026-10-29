@@ -36,11 +36,10 @@
                   <a class="btn btn-modifier"
                      href="/personnel/<%= encodeURIComponent(p.matricule) %>/modifier">Modifier</a>
   
-                  <form action="/personnel/<%= encodeURIComponent(p.matricule) %>/supprimer"
-                        method="POST"
-                        onsubmit="return confirm('Voulez-vous vraiment supprimer ce personnel ?')">
-                    <button type="submit" class="btn btn-supprimer">Supprimer</button>
-                  </form>
+                <form action="/personnel/<%= encodeURIComponent(p.matricule) %>/supprimer"
+                      method="POST">
+                  <button type="submit" class="btn btn-supprimer">Supprimer</button>
+                </form>
                 </td>
               </tr>
             <% }) %>
