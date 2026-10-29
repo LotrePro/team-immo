@@ -48,7 +48,6 @@ router.post('/login', async (req, res) => {
     });
   }
 });
-/*****************************************************************************************/
 
 function validerPersonnel(body) {
   const valeurs = {
@@ -84,7 +83,6 @@ function validerPersonnel(body) {
   return { valeurs, erreurs };
 }
 
-/***************************************************************************************/
 router.get('/accueil', auth, async (req, res) => {
   try {
     const personnels = await prisma.personnel.findMany({
